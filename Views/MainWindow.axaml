@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SmirnovCommander.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="SmirnovCommander.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SmirnovCommander">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Панель инструментов -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+            <Button Content="Назад" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0"/>
+            <Button Content="Обновить" Command="{Binding LeftPanel.RefreshCommand}" Margin="0,0,5,0"/>
+            <Separator Width="1" Margin="10,0"/>
+            <Button Content="Назад" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0"/>
+            <Button Content="Обновить" Command="{Binding RightPanel.RefreshCommand}"/>
+        </StackPanel>
+
+        <!-- Две панели -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <!-- Левая панель -->
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" Text="{Binding LeftPanel.CurrentPath}" 
+                               Background="#333" Foreground="White" Padding="5"/>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
+                             SelectedItem="{Binding LeftPanel.SelectedItem}"
+                             DoubleTapped="ListBox_DoubleTapped">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DisplaySize}" 
+                                               Foreground="Gray" Margin="10,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <!-- Правая панель -->
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
+                <Grid RowDefinitions="Auto,*">
+                    <TextBlock Grid.Row="0" Text="{Binding RightPanel.CurrentPath}" 
+                               Background="#333" Foreground="White" Padding="5"/>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
+                             SelectedItem="{Binding RightPanel.SelectedItem}"
+                             DoubleTapped="ListBox_DoubleTapped">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DisplaySize}" 
+                                               Foreground="Gray" Margin="10,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Статус бар -->
+        <TextBlock Grid.Row="2" Text="Готово" Background="#333" Foreground="White" Padding="5"/>
+    </Grid>
+
+</Window>
