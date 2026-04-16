@@ -29,7 +29,7 @@
                 <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
                 <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
                 <Separator Width="1" Margin="10,0"/>
-                <Button Content="⬆" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
+                <Button Content="Вверх" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
                 <Button Content="↻" Command="{Binding LeftPanel.RefreshCommand}" ToolTip.Tip="Обновить"/>
             </StackPanel>
             
@@ -39,7 +39,7 @@
             <!-- Кнопки для правой панели -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Button Content="↻" Command="{Binding RightPanel.RefreshCommand}" Margin="0,0,5,0" ToolTip.Tip="Обновить"/>
-                <Button Content="⬆" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
+                <Button Content="Вверх" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
                 <Separator Width="1" Margin="10,0"/>
                 <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
                 <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
@@ -96,7 +96,7 @@
             <Grid ColumnDefinitions="*,Auto,*">
                 <TextBlock Grid.Column="0" Text="{Binding LeftPanelStatusBar}" Foreground="White" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Text="|" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
-                <TextBlock Grid.Column="2" Text="{Binding RightPanelStatusBar}" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="{Binding RightPanelStatusBar}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Grid>
         </Border>
     </Grid>
