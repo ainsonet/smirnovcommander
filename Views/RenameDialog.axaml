@@ -6,6 +6,7 @@
         x:Class="SmirnovCommander.Views.RenameDialog"
         WindowStartupLocation="CenterOwner"
         CanResize="False"
+        Width="400" Height="150"
         Title="Переименовать">
 
     <StackPanel Margin="15">

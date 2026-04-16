@@ -13,6 +13,7 @@ public partial class RenameDialog : Window
         
         NameTextBox.Text = currentName;
         NameTextBox.SelectAll();
+        NameTextBox.Focus();
         
         OkButton.Click += OkButton_Click;
         CancelButton.Click += CancelButton_Click;
@@ -24,6 +25,9 @@ public partial class RenameDialog : Window
             else if (e.Key == Avalonia.Input.Key.Escape)
                 CancelButton_Click(null, null!);
         };
+        
+        // Закрыть окно когда оно показывается
+        this.Loaded += (s, e) => NameTextBox.Focus();
     }
 
     private void OkButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)

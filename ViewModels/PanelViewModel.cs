@@ -209,21 +209,29 @@ public partial class PanelViewModel : ObservableObject
 
     public bool RenameItem(string newName)
     {
-        if (SelectedItem == null || string.IsNullOrWhiteSpace(newName))
+        if (string.IsNullOrWhiteSpace(newName))
             return false;
 
         var targetPath = Path.Combine(CurrentPath, newName);
 
         try
         {
-            if (File.Exists(SelectedItem.FullPath))
+            if (File.Exists(targetPath) || Directory.Exists(targetPath))
             {
-                File.Move(SelectedItem.FullPath, targetPath, true);
+                System.Diagnostics.Debug.WriteLine($"Файл уже существует: {targetPath}");
+                return false;
             }
-            else if (Directory.Exists(SelectedItem.FullPath))
+
+            var oldPath = Path.Combine(CurrentPath, SelectedItem?.Name ?? "");
+            if (File.Exists(oldPath))
             {
-                Directory.Move(SelectedItem.FullPath, targetPath);
+                File.Move(oldPath, targetPath, true);
             }
+            else if (Directory.Exists(oldPath))
+            {
+                Directory.Move(oldPath, targetPath);
+            }
+            SelectedItem = null;
             Refresh();
             return true;
         }

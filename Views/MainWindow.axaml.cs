@@ -117,7 +117,14 @@ public partial class MainWindow : Window
         
         if (!string.IsNullOrEmpty(dialog.Result))
         {
-            panel.RenameItem(dialog.Result);
+            if (!panel.RenameItem(dialog.Result))
+            {
+                // Показать ошибку
+                var errorDialog = new MessageBox();
+                errorDialog.Title = "Ошибка переименования";
+                errorDialog.MessageTextBlock.Text = "Не удалось переименовать файл/папку. Возможно такой файл уже существует.";
+                errorDialog.ShowDialog(this);
+            }
         }
     }
 }
