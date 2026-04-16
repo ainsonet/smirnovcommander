@@ -86,6 +86,11 @@ public partial class MainWindow : Window
                 activePanel.SelectedItems = [];
                 e.Handled = true;
             }
+            else if (e.Key == Key.F2)
+            {
+                activePanel.RenameCommand.Execute(null);
+                e.Handled = true;
+            }
         }
     }
 }

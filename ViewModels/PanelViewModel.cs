@@ -180,6 +180,50 @@ public partial class PanelViewModel : ObservableObject
         Refresh();
     }
 
+    [RelayCommand]
+    public void CreateFolder()
+    {
+        var folderName = $"Новая папка {DateTime.Now:HH.mm.ss}";
+        var newPath = Path.Combine(CurrentPath, folderName);
+        
+        try
+        {
+            Directory.CreateDirectory(newPath);
+            Refresh();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Ошибка создания папки: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    public void Rename()
+    {
+        if (SelectedItem == null)
+            return;
+
+        var newName = SelectedItem.Name; // В будущем можно добавить диалог ввода
+        var newPath = Path.Combine(CurrentPath, newName);
+
+        try
+        {
+            if (SelectedItem.IsDirectory)
+            {
+                Directory.Move(SelectedItem.FullPath, newPath);
+            }
+            else
+            {
+                File.Move(SelectedItem.FullPath, newPath);
+            }
+            Refresh();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Ошибка переименования: {ex.Message}");
+        }
+    }
+
     private void CopyDirectory(string sourceDir, string destinationDir)
     {
         Directory.CreateDirectory(destinationDir);
