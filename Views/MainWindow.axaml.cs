@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using SmirnovCommander.ViewModels;
+using System.Threading.Tasks;
 
 namespace SmirnovCommander.Views;
 
@@ -47,19 +48,19 @@ public partial class MainWindow : Window
         }
     }
 
-    private void LeftRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private async void LeftRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var panel = DataContext is MainWindowViewModel vm ? vm.LeftPanel : null;
-        ShowRenameDialog(panel);
+        await ShowRenameDialog(panel);
     }
 
-    private void RightRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private async void RightRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var panel = DataContext is MainWindowViewModel vm ? vm.RightPanel : null;
-        ShowRenameDialog(panel);
+        await ShowRenameDialog(panel);
     }
 
-    private void MainWindow_KeyDown(object? sender, KeyEventArgs e)
+    private async void MainWindow_KeyDown(object? sender, KeyEventArgs e)
     {
         if (DataContext is MainWindowViewModel vm)
         {
@@ -101,19 +102,19 @@ public partial class MainWindow : Window
             }
             else if (e.Key == Key.F2 && activePanel.SelectedItem != null)
             {
-                ShowRenameDialog(activePanel);
+                await ShowRenameDialog(activePanel);
                 e.Handled = true;
             }
         }
     }
 
-    private void ShowRenameDialog(PanelViewModel? panel)
+    private async Task ShowRenameDialog(PanelViewModel? panel)
     {
         if (panel == null || panel.SelectedItem == null)
             return;
 
         var dialog = new RenameDialog(panel.SelectedItem.Name);
-        dialog.ShowDialog(this);
+        await dialog.ShowDialog(this);
         
         if (!string.IsNullOrEmpty(dialog.Result))
         {
@@ -123,7 +124,7 @@ public partial class MainWindow : Window
                 var errorDialog = new MessageBox();
                 errorDialog.Title = "Ошибка переименования";
                 errorDialog.MessageTextBlock.Text = "Не удалось переименовать файл/папку. Возможно такой файл уже существует.";
-                errorDialog.ShowDialog(this);
+                await errorDialog.ShowDialog(this);
             }
         }
     }
