@@ -16,6 +16,40 @@ public partial class MainWindow : Window
         RightPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
         
         KeyDown += MainWindow_KeyDown;
+        
+        LeftPanelList.AddHandler(InputElement.TappedEvent, OnLeftPanelTapped);
+        RightPanelList.AddHandler(InputElement.TappedEvent, OnRightPanelTapped);
+        
+        LeftRenameButton.Click += LeftRenameButton_Click;
+        RightRenameButton.Click += RightRenameButton_Click;
+    }
+
+    private void LeftRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var panel = DataContext is MainWindowViewModel vm ? vm.LeftPanel : null;
+        ShowRenameDialog(panel);
+    }
+
+    private void RightRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var panel = DataContext is MainWindowViewModel vm ? vm.RightPanel : null;
+        ShowRenameDialog(panel);
+    }
+
+    private void OnLeftPanelTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm && vm.LeftPanel.SelectedItem?.IsDirectory == true)
+        {
+            vm.LeftPanel.EnterDirectoryCommand.Execute(null);
+        }
+    }
+
+    private void OnRightPanelTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm && vm.RightPanel.SelectedItem?.IsDirectory == true)
+        {
+            vm.RightPanel.EnterDirectoryCommand.Execute(null);
+        }
     }
 
     private void UpdateActivePanel()
@@ -86,11 +120,25 @@ public partial class MainWindow : Window
                 activePanel.SelectedItems = [];
                 e.Handled = true;
             }
-            else if (e.Key == Key.F2)
+            else if (e.Key == Key.F2 && activePanel.SelectedItem != null)
             {
-                activePanel.RenameCommand.Execute(null);
+                ShowRenameDialog(activePanel);
                 e.Handled = true;
             }
+        }
+    }
+
+    private void ShowRenameDialog(PanelViewModel? panel)
+    {
+        if (panel == null || panel.SelectedItem == null)
+            return;
+
+        var dialog = new RenameDialog(panel.SelectedItem.Name);
+        dialog.ShowDialog(this);
+        
+        if (!string.IsNullOrEmpty(dialog.Result))
+        {
+            panel.RenameItem(dialog.Result);
         }
     }
 }

@@ -29,7 +29,7 @@
                 <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
                 <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
                 <Button Content="Папка" Command="{Binding LeftPanel.CreateFolderCommand}" Margin="0,0,5,0" ToolTip.Tip="Создать папку"/>
-                <Button Content="Переим." Command="{Binding LeftPanel.RenameCommand}" Margin="0,0,5,0" ToolTip.Tip="F2"/>
+                <Button x:Name="LeftRenameButton" Content="Переим." Margin="0,0,5,0" ToolTip.Tip="F2"/>
                 <Separator Width="1" Margin="10,0"/>
                 <Button Content="↑" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
                 <Button Content="↻" Command="{Binding LeftPanel.RefreshCommand}" ToolTip.Tip="Обновить"/>
@@ -43,7 +43,7 @@
                 <Button Content="↻" Command="{Binding RightPanel.RefreshCommand}" Margin="0,0,5,0" ToolTip.Tip="Обновить"/>
                 <Button Content="↑" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
                 <Separator Width="1" Margin="10,0"/>
-                <Button Content="Переим." Command="{Binding RightPanel.RenameCommand}" Margin="0,0,5,0" ToolTip.Tip="F2"/>
+                <Button x:Name="RightRenameButton" Content="Переим." Margin="0,0,5,0" ToolTip.Tip="F2"/>
                 <Button Content="Папка" Command="{Binding RightPanel.CreateFolderCommand}" Margin="0,0,5,0" ToolTip.Tip="Создать папку"/>
                 <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
                 <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>

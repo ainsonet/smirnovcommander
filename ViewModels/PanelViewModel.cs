@@ -203,24 +203,34 @@ public partial class PanelViewModel : ObservableObject
         if (SelectedItem == null)
             return;
 
-        var newName = SelectedItem.Name; // В будущем можно добавить диалог ввода
-        var newPath = Path.Combine(CurrentPath, newName);
+        // В будущем - показать диалог
+        System.Diagnostics.Debug.WriteLine($"Переименовать: {SelectedItem.Name}");
+    }
+
+    public bool RenameItem(string newName)
+    {
+        if (SelectedItem == null || string.IsNullOrWhiteSpace(newName))
+            return false;
+
+        var targetPath = Path.Combine(CurrentPath, newName);
 
         try
         {
-            if (SelectedItem.IsDirectory)
+            if (File.Exists(SelectedItem.FullPath))
             {
-                Directory.Move(SelectedItem.FullPath, newPath);
+                File.Move(SelectedItem.FullPath, targetPath, true);
             }
-            else
+            else if (Directory.Exists(SelectedItem.FullPath))
             {
-                File.Move(SelectedItem.FullPath, newPath);
+                Directory.Move(SelectedItem.FullPath, targetPath);
             }
             Refresh();
+            return true;
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Ошибка переименования: {ex.Message}");
+            return false;
         }
     }
 
