@@ -26,13 +26,12 @@
         <!-- Две панели -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*">
             <!-- Левая панель -->
-            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5">
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="LeftPanelBorder">
                 <Grid RowDefinitions="Auto,*">
                     <TextBlock Grid.Row="0" Text="{Binding LeftPanel.CurrentPath}" 
                                Background="#333" Foreground="White" Padding="5"/>
-                    <ListBox Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
-                             SelectedItem="{Binding LeftPanel.SelectedItem}"
-                             DoubleTapped="ListBox_DoubleTapped">
+                    <ListBox x:Name="LeftPanelList" Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
+                             SelectedItem="{Binding LeftPanel.SelectedItem}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnDefinitions="*,Auto">
@@ -47,13 +46,12 @@
             </Border>
 
             <!-- Правая панель -->
-            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5">
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="RightPanelBorder">
                 <Grid RowDefinitions="Auto,*">
                     <TextBlock Grid.Row="0" Text="{Binding RightPanel.CurrentPath}" 
                                Background="#333" Foreground="White" Padding="5"/>
-                    <ListBox Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
-                             SelectedItem="{Binding RightPanel.SelectedItem}"
-                             DoubleTapped="ListBox_DoubleTapped">
+                    <ListBox x:Name="RightPanelList" Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
+                             SelectedItem="{Binding RightPanel.SelectedItem}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnDefinitions="*,Auto">

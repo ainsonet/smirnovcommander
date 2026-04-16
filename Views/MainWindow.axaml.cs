@@ -9,13 +9,24 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        
+        LeftPanelList.DoubleTapped += LeftPanelList_DoubleTapped;
+        RightPanelList.DoubleTapped += RightPanelList_DoubleTapped;
     }
 
-    private void ListBox_DoubleTapped(object? sender, TappedEventArgs e)
+    private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
     {
-        if (sender is ListBox listBox && listBox.DataContext is PanelViewModel panel)
+        if (DataContext is MainWindowViewModel vm && vm.LeftPanel.SelectedItem?.IsDirectory == true)
         {
-            panel.DoubleClickCommand.Execute(null);
+            vm.LeftPanel.EnterDirectoryCommand.Execute(null);
+        }
+    }
+
+    private void RightPanelList_DoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm && vm.RightPanel.SelectedItem?.IsDirectory == true)
+        {
+            vm.RightPanel.EnterDirectoryCommand.Execute(null);
         }
     }
 }
