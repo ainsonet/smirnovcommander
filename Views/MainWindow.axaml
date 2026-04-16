@@ -16,11 +16,14 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Панель инструментов -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Операции:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <Button Content="Копировать" Command="{Binding LeftPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
+            <Button Content="Вырезать" Command="{Binding LeftPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
+            <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
+            <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
+            <Separator Width="1" Margin="10,0"/>
             <Button Content="Назад" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0"/>
             <Button Content="Обновить" Command="{Binding LeftPanel.RefreshCommand}" Margin="0,0,5,0"/>
-            <Separator Width="1" Margin="10,0"/>
-            <Button Content="Назад" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0"/>
-            <Button Content="Обновить" Command="{Binding RightPanel.RefreshCommand}"/>
         </StackPanel>
 
         <!-- Две панели -->
