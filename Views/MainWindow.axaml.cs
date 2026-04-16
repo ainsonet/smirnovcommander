@@ -15,13 +15,36 @@ public partial class MainWindow : Window
         LeftPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
         RightPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
         
-        KeyDown += MainWindow_KeyDown;
-        
-        LeftPanelList.AddHandler(InputElement.TappedEvent, OnLeftPanelTapped);
-        RightPanelList.AddHandler(InputElement.TappedEvent, OnRightPanelTapped);
-        
         LeftRenameButton.Click += LeftRenameButton_Click;
         RightRenameButton.Click += RightRenameButton_Click;
+        
+        KeyDown += MainWindow_KeyDown;
+    }
+
+    private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm && vm.LeftPanel.SelectedItem?.IsDirectory == true)
+        {
+            vm.LeftPanel.EnterDirectoryCommand.Execute(null);
+            e.Handled = true;
+        }
+    }
+
+    private void RightPanelList_DoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm && vm.RightPanel.SelectedItem?.IsDirectory == true)
+        {
+            vm.RightPanel.EnterDirectoryCommand.Execute(null);
+            e.Handled = true;
+        }
+    }
+
+    private void UpdateActivePanel()
+    {
+        if (DataContext is MainWindowViewModel vm)
+        {
+            vm.ActivePanel = LeftPanelList.IsFocused ? vm.LeftPanel : vm.RightPanel;
+        }
     }
 
     private void LeftRenameButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -34,50 +57,6 @@ public partial class MainWindow : Window
     {
         var panel = DataContext is MainWindowViewModel vm ? vm.RightPanel : null;
         ShowRenameDialog(panel);
-    }
-
-    private void OnLeftPanelTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is MainWindowViewModel vm && vm.LeftPanel.SelectedItem?.IsDirectory == true)
-        {
-            vm.LeftPanel.EnterDirectoryCommand.Execute(null);
-        }
-    }
-
-    private void OnRightPanelTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is MainWindowViewModel vm && vm.RightPanel.SelectedItem?.IsDirectory == true)
-        {
-            vm.RightPanel.EnterDirectoryCommand.Execute(null);
-        }
-    }
-
-    private void UpdateActivePanel()
-    {
-        if (DataContext is MainWindowViewModel vm)
-        {
-            // Определяем активную панель по фокусу
-            if (FocusManager.GetFocusedElement() is Control control)
-            {
-                vm.ActivePanel = LeftPanelList.IsFocused ? vm.LeftPanel : vm.RightPanel;
-            }
-        }
-    }
-
-    private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is MainWindowViewModel vm && vm.LeftPanel.SelectedItem?.IsDirectory == true)
-        {
-            vm.LeftPanel.EnterDirectoryCommand.Execute(null);
-        }
-    }
-
-    private void RightPanelList_DoubleTapped(object? sender, TappedEventArgs e)
-    {
-        if (DataContext is MainWindowViewModel vm && vm.RightPanel.SelectedItem?.IsDirectory == true)
-        {
-            vm.RightPanel.EnterDirectoryCommand.Execute(null);
-        }
     }
 
     private void MainWindow_KeyDown(object? sender, KeyEventArgs e)

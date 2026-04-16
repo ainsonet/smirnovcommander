@@ -60,7 +60,8 @@
                     <TextBlock Grid.Row="0" Text="{Binding LeftPanel.CurrentPath}" 
                                Background="#333" Foreground="White" Padding="5"/>
                     <ListBox x:Name="LeftPanelList" Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
-                             SelectedItem="{Binding LeftPanel.SelectedItem}">
+                             SelectedItem="{Binding LeftPanel.SelectedItem}"
+                             DoubleTapped="LeftPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnDefinitions="*,Auto">
@@ -80,7 +81,8 @@
                     <TextBlock Grid.Row="0" Text="{Binding RightPanel.CurrentPath}" 
                                Background="#333" Foreground="White" Padding="5"/>
                     <ListBox x:Name="RightPanelList" Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
-                             SelectedItem="{Binding RightPanel.SelectedItem}">
+                             SelectedItem="{Binding RightPanel.SelectedItem}"
+                             DoubleTapped="RightPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnDefinitions="*,Auto">
