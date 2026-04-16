@@ -27,6 +27,9 @@ public partial class PanelViewModel : ObservableObject
     [ObservableProperty]
     private FileSystemItem? _clipboardItem;
 
+    [ObservableProperty]
+    private bool _isCutMode;
+
     public PanelViewModel()
     {
         CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -91,8 +94,8 @@ public partial class PanelViewModel : ObservableObject
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count > 0)
         {
-            ClipboardItem = items.First(); // Для простоты копируем первый элемент
-            // В будущем можно добавить поддержку нескольких элементов
+            ClipboardItem = items.First();
+            IsCutMode = false;
         }
     }
 
@@ -103,6 +106,7 @@ public partial class PanelViewModel : ObservableObject
         if (items.Count > 0)
         {
             ClipboardItem = items.First();
+            IsCutMode = true;
         }
     }
 
@@ -118,18 +122,34 @@ public partial class PanelViewModel : ObservableObject
         {
             if (ClipboardItem.IsDirectory)
             {
-                CopyDirectory(ClipboardItem.FullPath, targetPath);
+                if (IsCutMode)
+                {
+                    CopyDirectory(ClipboardItem.FullPath, targetPath);
+                    Directory.Delete(ClipboardItem.FullPath, true);
+                }
+                else
+                {
+                    CopyDirectory(ClipboardItem.FullPath, targetPath);
+                }
             }
             else
             {
-                File.Copy(ClipboardItem.FullPath, targetPath, true);
+                if (IsCutMode)
+                {
+                    File.Move(ClipboardItem.FullPath, targetPath, true);
+                }
+                else
+                {
+                    File.Copy(ClipboardItem.FullPath, targetPath, true);
+                }
             }
+            
+            IsCutMode = false;
             Refresh();
         }
         catch (Exception ex)
         {
-            // В будущем показать уведомление
-            System.Diagnostics.Debug.WriteLine($"Ошибка копирования: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Ошибка: {ex.Message}");
         }
     }
 
