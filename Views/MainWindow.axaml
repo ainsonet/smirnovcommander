@@ -22,8 +22,15 @@
             <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
             <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
             <Separator Width="1" Margin="10,0"/>
+            <Button Content="Копировать" Command="{Binding RightPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
+            <Button Content="Вырезать" Command="{Binding RightPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
+            <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
+            <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
+            <Separator Width="1" Margin="10,0"/>
             <Button Content="Назад" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0"/>
             <Button Content="Обновить" Command="{Binding LeftPanel.RefreshCommand}" Margin="0,0,5,0"/>
+            <Button Content="Назад" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0"/>
+            <Button Content="Обновить" Command="{Binding RightPanel.RefreshCommand}"/>
         </StackPanel>
 
         <!-- Две панели -->
@@ -70,7 +77,13 @@
         </Grid>
 
         <!-- Статус бар -->
-        <TextBlock Grid.Row="2" Text="Готово" Background="#333" Foreground="White" Padding="5"/>
+        <Border Grid.Row="2" Background="#333" Padding="5">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <TextBlock Grid.Column="0" Text="{Binding LeftPanel.CurrentPath}" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding StatusBarText}" Foreground="White" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                <TextBlock Grid.Column="2" Text="{Binding RightPanel.CurrentPath}" Foreground="White" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
     </Grid>
 
 </Window>
