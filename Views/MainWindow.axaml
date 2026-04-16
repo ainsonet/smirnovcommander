@@ -24,7 +24,6 @@
             
             <!-- Кнопки для левой панели -->
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <TextBlock Text="Левая панель:" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <Button Content="Копировать" Command="{Binding LeftPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
                 <Button Content="Вырезать" Command="{Binding LeftPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
                 <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
@@ -46,7 +45,6 @@
                 <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
                 <Button Content="Вырезать" Command="{Binding RightPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
                 <Button Content="Копировать" Command="{Binding RightPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
-                <TextBlock Text=":Правая панель" VerticalAlignment="Center" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
 
@@ -95,10 +93,10 @@
 
         <!-- Статус бар -->
         <Border Grid.Row="2" Background="#333" Padding="5">
-            <Grid ColumnDefinitions="*,Auto,Auto">
-                <TextBlock Grid.Column="0" Text="{Binding LeftPanel.CurrentPath}" Foreground="White" VerticalAlignment="Center"/>
-                <TextBlock Grid.Column="1" Text="{Binding StatusBarText}" Foreground="White" VerticalAlignment="Center" Margin="10,0,10,0"/>
-                <TextBlock Grid.Column="2" Text="{Binding RightPanel.CurrentPath}" Foreground="White" VerticalAlignment="Center"/>
+            <Grid ColumnDefinitions="*,Auto,*">
+                <TextBlock Grid.Column="0" Text="{Binding LeftPanelStatusBar}" Foreground="White" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="|" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
+                <TextBlock Grid.Column="2" Text="{Binding RightPanelStatusBar}" Foreground="White" VerticalAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>
