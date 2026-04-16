@@ -34,7 +34,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Refresh()
+    public void Refresh()
     {
         Items.Clear();
 
@@ -59,7 +59,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void GoUp()
+    public void GoUp()
     {
         var parent = Directory.GetParent(CurrentPath);
         if (parent != null)
@@ -70,7 +70,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void EnterDirectory()
+    public void EnterDirectory()
     {
         if (SelectedItem?.IsDirectory == true)
         {
@@ -86,7 +86,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Copy()
+    public void Copy()
     {
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count > 0)
@@ -97,7 +97,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Cut()
+    public void Cut()
     {
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count > 0)
@@ -107,7 +107,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task Paste()
+    public async Task Paste()
     {
         if (ClipboardItem == null)
             return;
@@ -134,7 +134,7 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Delete()
+    public void Delete()
     {
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count == 0)
