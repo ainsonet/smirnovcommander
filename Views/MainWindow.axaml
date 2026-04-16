@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SmirnovCommander.ViewModels"
+        xmlns:icons="using:IconPacks.Avalonia.Lucide"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
@@ -24,15 +25,31 @@
             
             <!-- Кнопки для левой панели -->
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button Content="Копировать" Command="{Binding LeftPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
-                <Button Content="Вырезать" Command="{Binding LeftPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
-                <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
-                <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
-                <Button Content="Папка" Command="{Binding LeftPanel.CreateFolderCommand}" Margin="0,0,5,0" ToolTip.Tip="Создать папку"/>
-                <Button x:Name="LeftRenameButton" Content="Переим." Margin="0,0,5,0" ToolTip.Tip="F2"/>
+                <Button x:Name="LeftCopyButton" Margin="0,0,5,0" ToolTip.Tip="Копировать (Ctrl+C)">
+                    <icons:PackIconLucide Kind="Copy" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftCutButton" Margin="0,0,5,0" ToolTip.Tip="Вырезать (Ctrl+X)">
+                    <icons:PackIconLucide Kind="Scissors" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftPasteButton" Margin="0,0,5,0" ToolTip.Tip="Вставить (Ctrl+V)">
+                    <icons:PackIconLucide Kind="Clipboard" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Удалить (Del)">
+                    <icons:PackIconLucide Kind="Trash2" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftCreateFolderButton" Margin="0,0,5,0" ToolTip.Tip="Создать папку">
+                    <icons:PackIconLucide Kind="FolderPlus" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftRenameButton" Margin="0,0,5,0" ToolTip.Tip="Переименовать (F2)">
+                    <icons:PackIconLucide Kind="PenLine" Width="20" Height="20"/>
+                </Button>
                 <Separator Width="1" Margin="10,0"/>
-                <Button Content="↑" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
-                <Button Content="↻" Command="{Binding LeftPanel.RefreshCommand}" ToolTip.Tip="Обновить"/>
+                <Button x:Name="LeftGoUpButton" Margin="0,0,5,0" ToolTip.Tip="На уровень выше">
+                    <icons:PackIconLucide Kind="ArrowUp" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="LeftRefreshButton" ToolTip.Tip="Обновить">
+                    <icons:PackIconLucide Kind="RefreshCw" Width="20" Height="20"/>
+                </Button>
             </StackPanel>
             
             <!-- Пустая зона в центре -->
@@ -40,15 +57,31 @@
             
             <!-- Кнопки для правой панели -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button Content="↻" Command="{Binding RightPanel.RefreshCommand}" Margin="0,0,5,0" ToolTip.Tip="Обновить"/>
-                <Button Content="↑" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
+                <Button x:Name="RightRefreshButton" Margin="0,0,5,0" ToolTip.Tip="Обновить">
+                    <icons:PackIconLucide Kind="RefreshCw" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightGoUpButton" Margin="0,0,5,0" ToolTip.Tip="На уровень выше">
+                    <icons:PackIconLucide Kind="ArrowUp" Width="20" Height="20"/>
+                </Button>
                 <Separator Width="1" Margin="10,0"/>
-                <Button x:Name="RightRenameButton" Content="Переим." Margin="0,0,5,0" ToolTip.Tip="F2"/>
-                <Button Content="Папка" Command="{Binding RightPanel.CreateFolderCommand}" Margin="0,0,5,0" ToolTip.Tip="Создать папку"/>
-                <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
-                <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
-                <Button Content="Вырезать" Command="{Binding RightPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
-                <Button Content="Копировать" Command="{Binding RightPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
+                <Button x:Name="RightRenameButton" Margin="0,0,5,0" ToolTip.Tip="Переименовать (F2)">
+                    <icons:PackIconLucide Kind="PenLine" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightCreateFolderButton" Margin="0,0,5,0" ToolTip.Tip="Создать папку">
+                    <icons:PackIconLucide Kind="FolderPlus" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Удалить (Del)">
+                    <icons:PackIconLucide Kind="Trash2" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightPasteButton" Margin="0,0,5,0" ToolTip.Tip="Вставить (Ctrl+V)">
+                    <icons:PackIconLucide Kind="Clipboard" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightCutButton" Margin="0,0,5,0" ToolTip.Tip="Вырезать (Ctrl+X)">
+                    <icons:PackIconLucide Kind="Scissors" Width="20" Height="20"/>
+                </Button>
+                <Button x:Name="RightCopyButton" Margin="0,0,5,0" ToolTip.Tip="Копировать (Ctrl+C)">
+                    <icons:PackIconLucide Kind="Copy" Width="20" Height="20"/>
+                </Button>
             </StackPanel>
         </Grid>
 

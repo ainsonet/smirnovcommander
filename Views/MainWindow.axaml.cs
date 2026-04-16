@@ -16,8 +16,25 @@ public partial class MainWindow : Window
         LeftPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
         RightPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
         
+        // Левые кнопки
+        LeftCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.CopyCommand.Execute(null); };
+        LeftCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.CutCommand.Execute(null); };
+        LeftPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.PasteCommand.Execute(null); };
+        LeftDeleteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.DeleteCommand.Execute(null); };
+        LeftCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.CreateFolderCommand.Execute(null); };
         LeftRenameButton.Click += LeftRenameButton_Click;
+        LeftGoUpButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoUpCommand.Execute(null); };
+        LeftRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.RefreshCommand.Execute(null); };
+        
+        // Правые кнопки
+        RightRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.RefreshCommand.Execute(null); };
+        RightGoUpButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoUpCommand.Execute(null); };
         RightRenameButton.Click += RightRenameButton_Click;
+        RightCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CreateFolderCommand.Execute(null); };
+        RightDeleteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.DeleteCommand.Execute(null); };
+        RightPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.PasteCommand.Execute(null); };
+        RightCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CutCommand.Execute(null); };
+        RightCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CopyCommand.Execute(null); };
         
         KeyDown += MainWindow_KeyDown;
     }
