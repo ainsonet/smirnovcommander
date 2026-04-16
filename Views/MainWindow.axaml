@@ -15,23 +15,40 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Панель инструментов -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-            <TextBlock Text="Операции:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <Button Content="Копировать" Command="{Binding LeftPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
-            <Button Content="Вырезать" Command="{Binding LeftPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
-            <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
-            <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
-            <Separator Width="1" Margin="10,0"/>
-            <Button Content="Копировать" Command="{Binding RightPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
-            <Button Content="Вырезать" Command="{Binding RightPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
-            <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
-            <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
-            <Separator Width="1" Margin="10,0"/>
-            <Button Content="Назад" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0"/>
-            <Button Content="Обновить" Command="{Binding LeftPanel.RefreshCommand}" Margin="0,0,5,0"/>
-            <Button Content="Назад" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0"/>
-            <Button Content="Обновить" Command="{Binding RightPanel.RefreshCommand}"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Кнопки для левой панели -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Левая панель:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <Button Content="Копировать" Command="{Binding LeftPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
+                <Button Content="Вырезать" Command="{Binding LeftPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
+                <Button Content="Вставить" Command="{Binding LeftPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
+                <Button Content="Удалить" Command="{Binding LeftPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
+                <Separator Width="1" Margin="10,0"/>
+                <Button Content="⬆" Command="{Binding LeftPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
+                <Button Content="↻" Command="{Binding LeftPanel.RefreshCommand}" ToolTip.Tip="Обновить"/>
+            </StackPanel>
+            
+            <!-- Пустая зона в центре -->
+            <Grid Grid.Column="1"/>
+            
+            <!-- Кнопки для правой панели -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Content="↻" Command="{Binding RightPanel.RefreshCommand}" Margin="0,0,5,0" ToolTip.Tip="Обновить"/>
+                <Button Content="⬆" Command="{Binding RightPanel.GoUpCommand}" Margin="0,0,5,0" ToolTip.Tip="На уровень выше"/>
+                <Separator Width="1" Margin="10,0"/>
+                <Button Content="Удалить" Command="{Binding RightPanel.DeleteCommand}" Margin="0,0,5,0" ToolTip.Tip="Del"/>
+                <Button Content="Вставить" Command="{Binding RightPanel.PasteCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V"/>
+                <Button Content="Вырезать" Command="{Binding RightPanel.CutCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X"/>
+                <Button Content="Копировать" Command="{Binding RightPanel.CopyCommand}" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C"/>
+                <TextBlock Text=":Правая панель" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
 
         <!-- Две панели -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*">
