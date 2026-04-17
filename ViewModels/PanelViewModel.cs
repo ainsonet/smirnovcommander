@@ -30,6 +30,12 @@ public partial class PanelViewModel : ObservableObject
     [ObservableProperty]
     private bool _isCutMode;
 
+    [ObservableProperty]
+    private string _sortColumn = "Name";
+
+    [ObservableProperty]
+    private bool _sortAscending = true;
+
     public PanelViewModel()
     {
         CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
@@ -46,19 +52,67 @@ public partial class PanelViewModel : ObservableObject
 
         try
         {
+            var itemsList = new List<FileSystemItem>();
+
             foreach (var dir in Directory.GetDirectories(CurrentPath))
             {
-                try { Items.Add(new FileSystemItem(dir)); }
+                try { itemsList.Add(new FileSystemItem(dir)); }
                 catch { }
             }
 
             foreach (var file in Directory.GetFiles(CurrentPath))
             {
-                try { Items.Add(new FileSystemItem(file)); }
+                try { itemsList.Add(new FileSystemItem(file)); }
                 catch { }
+            }
+
+            itemsList = SortItems(itemsList);
+            foreach (var item in itemsList)
+            {
+                Items.Add(item);
             }
         }
         catch { }
+    }
+
+    private List<FileSystemItem> SortItems(List<FileSystemItem> items)
+    {
+        var sorted = items.ToList();
+
+        if (SortColumn == "Name")
+        {
+            sorted = SortAscending 
+                ? sorted.OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList()
+                : sorted.OrderByDescending(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList();
+        }
+        else if (SortColumn == "Size")
+        {
+            sorted = SortAscending 
+                ? sorted.OrderBy(x => x.Size).ToList()
+                : sorted.OrderByDescending(x => x.Size).ToList();
+        }
+        else if (SortColumn == "Modified")
+        {
+            sorted = SortAscending 
+                ? sorted.OrderBy(x => x.Modified).ToList()
+                : sorted.OrderByDescending(x => x.Modified).ToList();
+        }
+
+        return sorted;
+    }
+
+    public void SortByColumn(string column)
+    {
+        if (SortColumn == column)
+        {
+            SortAscending = !SortAscending;
+        }
+        else
+        {
+            SortColumn = column;
+            SortAscending = true;
+        }
+        Refresh();
     }
 
     [RelayCommand]

@@ -111,6 +111,7 @@
                     </Grid>
                     <ListBox x:Name="LeftPanelList" Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
                              SelectedItem="{Binding LeftPanel.SelectedItem}"
+                             SelectionMode="Multiple"
                              DoubleTapped="LeftPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -137,6 +138,7 @@
                     </Grid>
                     <ListBox x:Name="RightPanelList" Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
                              SelectedItem="{Binding RightPanel.SelectedItem}"
+                             SelectionMode="Multiple"
                              DoubleTapped="RightPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
