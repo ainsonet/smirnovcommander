@@ -1,14 +1,14 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:SmirnovCommander.ViewModels"
-        xmlns:icons="using:IconPacks.Avalonia.Lucide"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="2000" d:DesignHeight="800"
         x:Class="SmirnovCommander.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SmirnovCommander">
+        Title="SmirnovCommander"
+        Width="2000" Height="800" MinWidth="1400" MinHeight="700">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -25,30 +25,37 @@
             
             <!-- Кнопки для левой панели -->
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <Button x:Name="LeftCopyButton" Margin="0,0,5,0" ToolTip.Tip="Копировать (Ctrl+C)">
-                    <icons:PackIconLucide Kind="Copy" Width="20" Height="20"/>
+                <Button x:Name="LeftBackButton" Margin="0,0,5,0" ToolTip.Tip="Назад">
+                    <TextBlock Text="⬅️"/>
                 </Button>
-                <Button x:Name="LeftCutButton" Margin="0,0,5,0" ToolTip.Tip="Вырезать (Ctrl+X)">
-                    <icons:PackIconLucide Kind="Scissors" Width="20" Height="20"/>
+                <Button x:Name="LeftForwardButton" Margin="0,0,5,0" ToolTip.Tip="Вперёд">
+                    <TextBlock Text="➡️"/>
                 </Button>
-                <Button x:Name="LeftPasteButton" Margin="0,0,5,0" ToolTip.Tip="Вставить (Ctrl+V)">
-                    <icons:PackIconLucide Kind="Clipboard" Width="20" Height="20"/>
+                <Separator Width="1" Margin="5,0"/>
+                <Button x:Name="LeftCopyButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C">
+                    <TextBlock Text="📋 Копировать"/>
                 </Button>
-                <Button x:Name="LeftDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Удалить (Del)">
-                    <icons:PackIconLucide Kind="Trash2" Width="20" Height="20"/>
+                <Button x:Name="LeftCutButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X">
+                    <TextBlock Text="✂️ Вырезать"/>
+                </Button>
+                <Button x:Name="LeftPasteButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V">
+                    <TextBlock Text="📄 Вставить"/>
+                </Button>
+                <Button x:Name="LeftDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Del">
+                    <TextBlock Text="🗑️ Удалить"/>
                 </Button>
                 <Button x:Name="LeftCreateFolderButton" Margin="0,0,5,0" ToolTip.Tip="Создать папку">
-                    <icons:PackIconLucide Kind="FolderPlus" Width="20" Height="20"/>
+                    <TextBlock Text="📁 Папка"/>
                 </Button>
-                <Button x:Name="LeftRenameButton" Margin="0,0,5,0" ToolTip.Tip="Переименовать (F2)">
-                    <icons:PackIconLucide Kind="PenLine" Width="20" Height="20"/>
+                <Button x:Name="LeftRenameButton" Margin="0,0,5,0" ToolTip.Tip="F2">
+                    <TextBlock Text="✏️ Переименовать"/>
                 </Button>
                 <Separator Width="1" Margin="10,0"/>
-                <Button x:Name="LeftGoUpButton" Margin="0,0,5,0" ToolTip.Tip="На уровень выше">
-                    <icons:PackIconLucide Kind="ArrowUp" Width="20" Height="20"/>
+                <Button x:Name="LeftGoUpButton" Margin="0,0,5,0" ToolTip.Tip="↑">
+                    <TextBlock Text="⬆️ Вверх"/>
                 </Button>
-                <Button x:Name="LeftRefreshButton" ToolTip.Tip="Обновить">
-                    <icons:PackIconLucide Kind="RefreshCw" Width="20" Height="20"/>
+                <Button x:Name="LeftRefreshButton" ToolTip.Tip="↻">
+                    <TextBlock Text="🔄 Обновить"/>
                 </Button>
             </StackPanel>
             
@@ -57,30 +64,37 @@
             
             <!-- Кнопки для правой панели -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Button x:Name="RightRefreshButton" Margin="0,0,5,0" ToolTip.Tip="Обновить">
-                    <icons:PackIconLucide Kind="RefreshCw" Width="20" Height="20"/>
+                <Button x:Name="RightForwardButton" Margin="0,0,5,0" ToolTip.Tip="Вперёд">
+                    <TextBlock Text="➡️"/>
                 </Button>
-                <Button x:Name="RightGoUpButton" Margin="0,0,5,0" ToolTip.Tip="На уровень выше">
-                    <icons:PackIconLucide Kind="ArrowUp" Width="20" Height="20"/>
+                <Button x:Name="RightBackButton" Margin="0,0,5,0" ToolTip.Tip="Назад">
+                    <TextBlock Text="⬅️"/>
+                </Button>
+                <Separator Width="1" Margin="5,0"/>
+                <Button x:Name="RightRefreshButton" Margin="0,0,5,0" ToolTip.Tip="↻">
+                    <TextBlock Text="🔄 Обновить"/>
+                </Button>
+                <Button x:Name="RightGoUpButton" Margin="0,0,5,0" ToolTip.Tip="↑">
+                    <TextBlock Text="⬆️ Вверх"/>
                 </Button>
                 <Separator Width="1" Margin="10,0"/>
-                <Button x:Name="RightRenameButton" Margin="0,0,5,0" ToolTip.Tip="Переименовать (F2)">
-                    <icons:PackIconLucide Kind="PenLine" Width="20" Height="20"/>
+                <Button x:Name="RightRenameButton" Margin="0,0,5,0" ToolTip.Tip="F2">
+                    <TextBlock Text="✏️ Переименовать"/>
                 </Button>
                 <Button x:Name="RightCreateFolderButton" Margin="0,0,5,0" ToolTip.Tip="Создать папку">
-                    <icons:PackIconLucide Kind="FolderPlus" Width="20" Height="20"/>
+                    <TextBlock Text="📁 Папка"/>
                 </Button>
-                <Button x:Name="RightDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Удалить (Del)">
-                    <icons:PackIconLucide Kind="Trash2" Width="20" Height="20"/>
+                <Button x:Name="RightDeleteButton" Margin="0,0,5,0" ToolTip.Tip="Del">
+                    <TextBlock Text="🗑️ Удалить"/>
                 </Button>
-                <Button x:Name="RightPasteButton" Margin="0,0,5,0" ToolTip.Tip="Вставить (Ctrl+V)">
-                    <icons:PackIconLucide Kind="Clipboard" Width="20" Height="20"/>
+                <Button x:Name="RightPasteButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+V">
+                    <TextBlock Text="📄 Вставить"/>
                 </Button>
-                <Button x:Name="RightCutButton" Margin="0,0,5,0" ToolTip.Tip="Вырезать (Ctrl+X)">
-                    <icons:PackIconLucide Kind="Scissors" Width="20" Height="20"/>
+                <Button x:Name="RightCutButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+X">
+                    <TextBlock Text="✂️ Вырезать"/>
                 </Button>
-                <Button x:Name="RightCopyButton" Margin="0,0,5,0" ToolTip.Tip="Копировать (Ctrl+C)">
-                    <icons:PackIconLucide Kind="Copy" Width="20" Height="20"/>
+                <Button x:Name="RightCopyButton" Margin="0,0,5,0" ToolTip.Tip="Ctrl+C">
+                    <TextBlock Text="📋 Копировать"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -90,16 +104,21 @@
             <!-- Левая панель -->
             <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="LeftPanelBorder">
                 <Grid RowDefinitions="Auto,*">
-                    <TextBlock Grid.Row="0" Text="{Binding LeftPanel.CurrentPath}" 
-                               Background="#333" Foreground="White" Padding="5"/>
+                    <Grid Grid.Row="0" ColumnDefinitions="2.5*,1.5*,Auto" Background="#444">
+                        <TextBlock Grid.Column="0" Text="Имя" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="Размер" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="Дата" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                    </Grid>
                     <ListBox x:Name="LeftPanelList" Grid.Row="1" ItemsSource="{Binding LeftPanel.Items}"
                              SelectedItem="{Binding LeftPanel.SelectedItem}"
                              DoubleTapped="LeftPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="*,Auto">
+                                <Grid ColumnDefinitions="2.5*,1.5*,Auto">
                                     <TextBlock Grid.Column="0" Text="{Binding Name}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding DisplaySize}" 
+                                               Foreground="Gray" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Modified, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
                                                Foreground="Gray" Margin="10,0,0,0"/>
                                 </Grid>
                             </DataTemplate>
@@ -111,16 +130,21 @@
             <!-- Правая панель -->
             <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="RightPanelBorder">
                 <Grid RowDefinitions="Auto,*">
-                    <TextBlock Grid.Row="0" Text="{Binding RightPanel.CurrentPath}" 
-                               Background="#333" Foreground="White" Padding="5"/>
+                    <Grid Grid.Row="0" ColumnDefinitions="2.5*,1.5*,Auto" Background="#444">
+                        <TextBlock Grid.Column="0" Text="Имя" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="Размер" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="Дата" Foreground="White" Padding="5" VerticalAlignment="Center"/>
+                    </Grid>
                     <ListBox x:Name="RightPanelList" Grid.Row="1" ItemsSource="{Binding RightPanel.Items}"
                              SelectedItem="{Binding RightPanel.SelectedItem}"
                              DoubleTapped="RightPanelList_DoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="*,Auto">
+                                <Grid ColumnDefinitions="2.5*,1.5*,Auto">
                                     <TextBlock Grid.Column="0" Text="{Binding Name}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding DisplaySize}" 
+                                               Foreground="Gray" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Modified, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
                                                Foreground="Gray" Margin="10,0,0,0"/>
                                 </Grid>
                             </DataTemplate>

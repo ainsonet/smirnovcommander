@@ -14,20 +14,21 @@ public class FileSystemItem
     public FileSystemItem(string path)
     {
         FullPath = path;
-        Name = Path.GetFileName(path);
+        Name = Path.GetFileName(path) ?? Path.GetFileName(path.TrimEnd(Path.DirectorySeparatorChar));
         
-        var info = new FileInfo(path);
-        IsDirectory = info.Attributes.HasFlag(FileAttributes.Directory);
+        var dirInfo = Directory.Exists(path) ? new DirectoryInfo(path) : null;
+        var fileInfo = File.Exists(path) ? new FileInfo(path) : null;
         
-        if (!IsDirectory && info.Exists)
+        IsDirectory = dirInfo != null;
+        
+        if (IsDirectory && dirInfo != null)
         {
-            Size = info.Length;
-            Modified = info.LastWriteTime;
-        }
-        else if (IsDirectory && Directory.Exists(path))
-        {
-            var dirInfo = new DirectoryInfo(path);
             Modified = dirInfo.LastWriteTime;
+        }
+        else if (fileInfo != null && fileInfo.Exists)
+        {
+            Size = fileInfo.Length;
+            Modified = fileInfo.LastWriteTime;
         }
     }
 

@@ -83,9 +83,30 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void DoubleClick()
+    public void Open()
     {
-        EnterDirectory();
+        if (SelectedItem == null)
+            return;
+
+        if (SelectedItem.IsDirectory)
+        {
+            EnterDirectory();
+        }
+        else
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = SelectedItem.FullPath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка открытия файла: {ex.Message}");
+            }
+        }
     }
 
     [RelayCommand]
@@ -203,7 +224,6 @@ public partial class PanelViewModel : ObservableObject
         if (SelectedItem == null)
             return;
 
-        // В будущем - показать диалог
         System.Diagnostics.Debug.WriteLine($"Переименовать: {SelectedItem.Name}");
     }
 
