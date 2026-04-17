@@ -21,8 +21,16 @@ public partial class PanelViewModel : ObservableObject
     [ObservableProperty]
     private FileSystemItem? _selectedItem;
 
-    [ObservableProperty]
     private List<FileSystemItem> _selectedItems = [];
+    public List<FileSystemItem> SelectedItems
+    {
+        get => _selectedItems;
+        set
+        {
+            _selectedItems = value;
+            OnPropertyChanged(nameof(SelectedItems));
+        }
+    }
 
     [ObservableProperty]
     private FileSystemItem? _clipboardItem;

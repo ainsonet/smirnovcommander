@@ -27,19 +27,21 @@ public partial class MainWindowViewModel : ViewModelBase
         LeftPanel.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(PanelViewModel.Items) || 
-                e.PropertyName == nameof(PanelViewModel.SelectedItem))
+                e.PropertyName == nameof(PanelViewModel.SelectedItem) ||
+                e.PropertyName == nameof(PanelViewModel.SelectedItems))
                 UpdateStatusBars();
         };
         
         RightPanel.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(PanelViewModel.Items) || 
-                e.PropertyName == nameof(PanelViewModel.SelectedItem))
+                e.PropertyName == nameof(PanelViewModel.SelectedItem) ||
+                e.PropertyName == nameof(PanelViewModel.SelectedItems))
                 UpdateStatusBars();
         };
     }
 
-    private void UpdateStatusBars()
+    public void UpdateStatusBars()
     {
         var leftSelected = LeftPanel.SelectedItems.Count > 0 ? LeftPanel.SelectedItems.Count : 
                           (LeftPanel.SelectedItem != null ? 1 : 0);

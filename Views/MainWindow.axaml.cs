@@ -2,6 +2,9 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using SmirnovCommander.ViewModels;
+using SmirnovCommander.Models;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmirnovCommander.Views;
@@ -14,8 +17,8 @@ public partial class MainWindow : Window
         
         LeftPanelList.DoubleTapped += LeftPanelList_DoubleTapped;
         RightPanelList.DoubleTapped += RightPanelList_DoubleTapped;
-        LeftPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
-        RightPanelList.SelectionChanged += (s, e) => UpdateActivePanel();
+        LeftPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
+        RightPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
         
         // Левые кнопки
         LeftCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Copy(); };
@@ -63,6 +66,34 @@ public partial class MainWindow : Window
         if (DataContext is MainWindowViewModel vm)
         {
             vm.ActivePanel = LeftPanelList.IsFocused ? vm.LeftPanel : vm.RightPanel;
+        }
+    }
+
+    private void UpdateStatusBars()
+    {
+        if (DataContext is MainWindowViewModel vm)
+        {
+            // Прямо из ListBox читаем выделение
+            var leftSelected = LeftPanelList.SelectedItems.Count;
+            var rightSelected = RightPanelList.SelectedItems.Count;
+            
+            var leftDirCount = LeftPanelList.Items.Cast<FileSystemItem>().Count(i => i.IsDirectory);
+            var leftFileCount = LeftPanelList.Items.Cast<FileSystemItem>().Count(i => !i.IsDirectory);
+            vm.LeftPanelStatusBar = $"{vm.LeftPanel.CurrentPath} | Файлов: {leftFileCount} | Папок: {leftDirCount} | Выделено: {leftSelected}";
+            
+            var rightDirCount = RightPanelList.Items.Cast<FileSystemItem>().Count(i => i.IsDirectory);
+            var rightFileCount = RightPanelList.Items.Cast<FileSystemItem>().Count(i => !i.IsDirectory);
+            vm.RightPanelStatusBar = $"{vm.RightPanel.CurrentPath} | Файлов: {rightFileCount} | Папок: {rightDirCount} | Выделено: {rightSelected}";
+        }
+    }
+
+    private void SyncSelectedItems()
+    {
+        if (DataContext is MainWindowViewModel vm)
+        {
+            // Синхронизируем SelectedItems из ListBox в ViewModel
+            vm.LeftPanel.SelectedItems = LeftPanelList.SelectedItems.Cast<FileSystemItem>().ToList();
+            vm.RightPanel.SelectedItems = RightPanelList.SelectedItems.Cast<FileSystemItem>().ToList();
         }
     }
 
