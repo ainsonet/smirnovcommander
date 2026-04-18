@@ -56,8 +56,8 @@ public partial class MainWindow : Window
         RightCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CreateFolder(); };
         RightRenameButton.Click += RightRenameButton_Click;
         
+        AddHandler(InputElement.KeyDownEvent, Window_KeyDown, RoutingStrategy.Tunnel);
         KeyDown += Window_KeyDown;
-        PreviewKeyDown += Window_KeyDown;
     }
 
     private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
