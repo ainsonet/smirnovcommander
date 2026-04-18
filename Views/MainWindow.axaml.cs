@@ -23,6 +23,8 @@ public partial class MainWindow : Window
         // Горячие клавиши на панелях
         LeftPanelList.KeyDown += ListBox_KeyDown;
         RightPanelList.KeyDown += ListBox_KeyDown;
+        LeftPanelList.GotFocus += (s, e) => UpdateActivePanel();
+        RightPanelList.GotFocus += (s, e) => UpdateActivePanel();
         LeftPanelBorder.KeyDown += Window_KeyDown;
         RightPanelBorder.KeyDown += Window_KeyDown;
         
@@ -55,6 +57,7 @@ public partial class MainWindow : Window
         RightRenameButton.Click += RightRenameButton_Click;
         
         KeyDown += Window_KeyDown;
+        PreviewKeyDown += Window_KeyDown;
     }
 
     private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
