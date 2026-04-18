@@ -37,7 +37,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             if (e.PropertyName == nameof(PanelViewModel.Items) || 
                 e.PropertyName == nameof(PanelViewModel.SelectedItem) ||
-                e.PropertyName == nameof(PanelViewModel.SelectedItems))
+                e.PropertyName == nameof(PanelViewModel.SelectedItems) ||
+                e.PropertyName == nameof(PanelViewModel.CurrentPath))
                 UpdateStatusBars();
         };
         
@@ -45,7 +46,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             if (e.PropertyName == nameof(PanelViewModel.Items) || 
                 e.PropertyName == nameof(PanelViewModel.SelectedItem) ||
-                e.PropertyName == nameof(PanelViewModel.SelectedItems))
+                e.PropertyName == nameof(PanelViewModel.SelectedItems) ||
+                e.PropertyName == nameof(PanelViewModel.CurrentPath))
                 UpdateStatusBars();
         };
     }
