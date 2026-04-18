@@ -14,7 +14,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
         <!-- Панель инструментов -->
         <Grid Grid.Row="0" Margin="5">
             <Grid.ColumnDefinitions>
@@ -170,7 +170,7 @@
         </Grid>
 
         <!-- Статус бар -->
-        <Border Grid.Row="2" Background="#333" Padding="5">
+        <Border Grid.Row="3" Background="#333" Padding="5">
             <Grid ColumnDefinitions="*,Auto,*">
                 <TextBlock Grid.Column="0" Text="{Binding LeftPanelStatusBar}" Foreground="White" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="1" Text="|" Foreground="White" VerticalAlignment="Center" Margin="10,0"/>
