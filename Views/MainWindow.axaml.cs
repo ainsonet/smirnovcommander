@@ -21,10 +21,8 @@ public partial class MainWindow : Window
         RightPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
         
         // Горячие клавиши на панелях
-        LeftPanelList.KeyDown += ListBox_KeyDown;
-        RightPanelList.KeyDown += ListBox_KeyDown;
-        LeftPanelList.GotFocus += (s, e) => UpdateActivePanel();
-        RightPanelList.GotFocus += (s, e) => UpdateActivePanel();
+        LeftPanelList.KeyDown += Window_KeyDown;
+        RightPanelList.KeyDown += Window_KeyDown;
         LeftPanelBorder.KeyDown += Window_KeyDown;
         RightPanelBorder.KeyDown += Window_KeyDown;
         
@@ -125,10 +123,14 @@ public partial class MainWindow : Window
         await ShowRenameDialog(panel);
     }
 
-    private async void Window_KeyDown(object? sender, KeyEventArgs e)
+    private void Window_KeyDown(object? sender, KeyEventArgs e)
     {
         if (DataContext is MainWindowViewModel vm)
         {
+            // Игнорируем, если фокус на TextBox поиска
+            if (SearchTextBox.IsFocused)
+                return;
+                
             var activePanel = vm.ActivePanel ?? vm.LeftPanel;
 
             if (e.KeyModifiers == KeyModifiers.Control)
@@ -145,7 +147,7 @@ public partial class MainWindow : Window
                 }
                 else if (e.Key == Key.V)
                 {
-                    await activePanel.Paste();
+                    Task.Run(async () => await activePanel.Paste());
                     e.Handled = true;
                 }
             }
@@ -167,15 +169,10 @@ public partial class MainWindow : Window
             }
             else if (e.Key == Key.F2 && activePanel.SelectedItem != null)
             {
-                await ShowRenameDialog(activePanel);
+                ShowRenameDialog(activePanel);
                 e.Handled = true;
             }
         }
-    }
-
-    private void ListBox_KeyDown(object? sender, KeyEventArgs e)
-    {
-        Window_KeyDown(sender, e);
     }
 
     private async Task ShowRenameDialog(PanelViewModel? panel)
