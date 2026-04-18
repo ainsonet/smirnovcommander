@@ -99,8 +99,21 @@
             </StackPanel>
         </Grid>
 
+        <!-- Панель поиска -->
+        <Border Grid.Row="1" Background="#333" Padding="10" Margin="5,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <TextBlock Grid.Column="0" Text="🔍" Foreground="White" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox Grid.Column="1" x:Name="SearchTextBox" 
+                         Background="#444" Foreground="White" 
+                         VerticalAlignment="Center" 
+                         PlaceholderText="Поиск файлов..."/>
+                <Button Grid.Column="2" x:Name="SearchButton" Content="Найти" 
+                        Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
         <!-- Две панели -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+        <Grid Grid.Row="2" ColumnDefinitions="*,*">
             <!-- Левая панель -->
             <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="LeftPanelBorder">
                 <Grid RowDefinitions="Auto,*">

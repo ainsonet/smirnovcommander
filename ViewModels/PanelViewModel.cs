@@ -114,6 +114,54 @@ public partial class PanelViewModel : ObservableObject
         catch { }
     }
 
+    public void Search(string? pattern)
+    {
+        if (string.IsNullOrWhiteSpace(pattern))
+        {
+            Refresh();
+            return;
+        }
+
+        Items.Clear();
+        var searchPattern = pattern.ToLower();
+
+        try
+        {
+            var itemsList = new List<FileSystemItem>();
+
+            foreach (var dir in Directory.GetDirectories(CurrentPath))
+            {
+                try 
+                {
+                    var item = new FileSystemItem(dir);
+                    if (item.Name.ToLower().Contains(searchPattern))
+                        itemsList.Add(item);
+                }
+                catch { }
+            }
+
+            foreach (var file in Directory.GetFiles(CurrentPath))
+            {
+                try 
+                {
+                    var item = new FileSystemItem(file);
+                    if (item.Name.ToLower().Contains(searchPattern))
+                        itemsList.Add(item);
+                }
+                catch { }
+            }
+
+            foreach (var item in itemsList)
+            {
+                Items.Add(item);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Ошибка поиска: {ex.Message}");
+        }
+    }
+
     [RelayCommand]
     public void GoUp()
     {

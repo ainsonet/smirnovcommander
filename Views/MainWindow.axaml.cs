@@ -44,6 +44,10 @@ public partial class MainWindow : Window
         RightCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Cut(); };
         RightCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Copy(); };
         
+        // Поиск
+        SearchButton.Click += SearchButton_Click;
+        SearchTextBox.KeyDown += SearchTextBox_KeyDown;
+        
         KeyDown += MainWindow_KeyDown;
     }
 
@@ -179,6 +183,23 @@ public partial class MainWindow : Window
                 errorDialog.MessageTextBlock.Text = "Не удалось переименовать файл/папку. Возможно такой файл уже существует.";
                 await errorDialog.ShowDialog(this);
             }
+        }
+    }
+
+    private void SearchButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (DataContext is MainWindowViewModel vm)
+        {
+            var activePanel = vm.ActivePanel ?? vm.LeftPanel;
+            activePanel.Search(SearchTextBox.Text);
+        }
+    }
+
+    private void SearchTextBox_KeyDown(object? sender, Avalonia.Input.KeyEventArgs e)
+    {
+        if (e.Key == Avalonia.Input.Key.Enter)
+        {
+            SearchButton_Click(sender, e);
         }
     }
 }
