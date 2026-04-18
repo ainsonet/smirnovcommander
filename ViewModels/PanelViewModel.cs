@@ -155,6 +155,11 @@ public partial class PanelViewModel : ObservableObject
             {
                 Items.Add(item);
             }
+
+            if (itemsList.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ничего не найдено по запросу '{pattern}'");
+            }
         }
         catch (Exception ex)
         {

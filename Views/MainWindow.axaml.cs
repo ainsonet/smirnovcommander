@@ -192,6 +192,12 @@ public partial class MainWindow : Window
         {
             var activePanel = vm.ActivePanel ?? vm.LeftPanel;
             activePanel.Search(SearchTextBox.Text);
+            
+            // Сфокусироваться на активной панели
+            if (vm.ActivePanel == vm.RightPanel)
+                RightPanelList.Focus();
+            else
+                LeftPanelList.Focus();
         }
     }
 
