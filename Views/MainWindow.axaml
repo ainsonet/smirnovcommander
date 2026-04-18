@@ -118,7 +118,7 @@
         <!-- Две панели -->
         <Grid Grid.Row="2" ColumnDefinitions="*,*">
             <!-- Левая панель -->
-            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="LeftPanelBorder">
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="LeftPanelBorder" Focusable="True">
                 <Grid RowDefinitions="Auto,*">
                     <Grid Grid.Row="0" ColumnDefinitions="2.5*,1.5*,Auto" Background="#444">
                         <TextBlock Grid.Column="0" Text="Имя" Foreground="White" Padding="5" VerticalAlignment="Center"/>
@@ -145,7 +145,7 @@
             </Border>
 
             <!-- Правая панель -->
-            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="RightPanelBorder">
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5" x:Name="RightPanelBorder" Focusable="True">
                 <Grid RowDefinitions="Auto,*">
                     <Grid Grid.Row="0" ColumnDefinitions="2.5*,1.5*,Auto" Background="#444">
                         <TextBlock Grid.Column="0" Text="Имя" Foreground="White" Padding="5" VerticalAlignment="Center"/>
