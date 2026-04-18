@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using SmirnovCommander.Models;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -7,8 +8,8 @@ namespace SmirnovCommander.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public PanelViewModel LeftPanel { get; } = new();
-    public PanelViewModel RightPanel { get; } = new();
+    public PanelViewModel LeftPanel { get; }
+    public PanelViewModel RightPanel { get; }
 
     [ObservableProperty]
     private string _leftPanelStatusBar = "";
@@ -19,8 +20,16 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private PanelViewModel _activePanel;
 
+    [ObservableProperty]
+    private FileSystemItem? _clipboardItem;
+
+    [ObservableProperty]
+    private bool _isCutMode;
+
     public MainWindowViewModel()
     {
+        LeftPanel = new PanelViewModel(this);
+        RightPanel = new PanelViewModel(this);
         ActivePanel = LeftPanel;
         UpdateStatusBars();
         

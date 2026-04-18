@@ -38,16 +38,48 @@ public partial class PanelViewModel : ObservableObject
     [ObservableProperty]
     private bool _isCutMode;
 
-    [ObservableProperty]
-    private string _sortColumn = "Name";
+    private readonly MainWindowViewModel? _mainViewModel;
+    private readonly Stack<string> _navigationHistory = new();
+    private readonly Stack<string> _forwardHistory = new();
 
-    [ObservableProperty]
-    private bool _sortAscending = true;
-
-    public PanelViewModel()
+    public PanelViewModel(MainWindowViewModel? mainViewModel = null)
     {
+        _mainViewModel = mainViewModel;
         CurrentPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         Refresh();
+    }
+
+    public void NavigateTo(string path)
+    {
+        if (path != CurrentPath)
+        {
+            _navigationHistory.Push(CurrentPath);
+            _forwardHistory.Clear();
+            CurrentPath = path;
+            Refresh();
+        }
+    }
+
+    [RelayCommand]
+    public void GoBack()
+    {
+        if (_navigationHistory.Count > 0)
+        {
+            _forwardHistory.Push(CurrentPath);
+            CurrentPath = _navigationHistory.Pop();
+            Refresh();
+        }
+    }
+
+    [RelayCommand]
+    public void GoForward()
+    {
+        if (_forwardHistory.Count > 0)
+        {
+            _navigationHistory.Push(CurrentPath);
+            CurrentPath = _forwardHistory.Pop();
+            Refresh();
+        }
     }
 
     [RelayCommand]
@@ -74,7 +106,6 @@ public partial class PanelViewModel : ObservableObject
                 catch { }
             }
 
-            itemsList = SortItems(itemsList);
             foreach (var item in itemsList)
             {
                 Items.Add(item);
@@ -83,54 +114,13 @@ public partial class PanelViewModel : ObservableObject
         catch { }
     }
 
-    private List<FileSystemItem> SortItems(List<FileSystemItem> items)
-    {
-        var sorted = items.ToList();
-
-        if (SortColumn == "Name")
-        {
-            sorted = SortAscending 
-                ? sorted.OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList()
-                : sorted.OrderByDescending(x => x.Name, StringComparer.OrdinalIgnoreCase).ToList();
-        }
-        else if (SortColumn == "Size")
-        {
-            sorted = SortAscending 
-                ? sorted.OrderBy(x => x.Size).ToList()
-                : sorted.OrderByDescending(x => x.Size).ToList();
-        }
-        else if (SortColumn == "Modified")
-        {
-            sorted = SortAscending 
-                ? sorted.OrderBy(x => x.Modified).ToList()
-                : sorted.OrderByDescending(x => x.Modified).ToList();
-        }
-
-        return sorted;
-    }
-
-    public void SortByColumn(string column)
-    {
-        if (SortColumn == column)
-        {
-            SortAscending = !SortAscending;
-        }
-        else
-        {
-            SortColumn = column;
-            SortAscending = true;
-        }
-        Refresh();
-    }
-
     [RelayCommand]
     public void GoUp()
     {
         var parent = Directory.GetParent(CurrentPath);
         if (parent != null)
         {
-            CurrentPath = parent.FullName;
-            Refresh();
+            NavigateTo(parent.FullName);
         }
     }
 
@@ -139,8 +129,7 @@ public partial class PanelViewModel : ObservableObject
     {
         if (SelectedItem?.IsDirectory == true)
         {
-            CurrentPath = SelectedItem.FullPath;
-            Refresh();
+            NavigateTo(SelectedItem.FullPath);
         }
     }
 
@@ -174,60 +163,61 @@ public partial class PanelViewModel : ObservableObject
     [RelayCommand]
     public void Copy()
     {
+        if (_mainViewModel == null) return;
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count > 0)
         {
-            ClipboardItem = items.First();
-            IsCutMode = false;
+            _mainViewModel.ClipboardItem = items.First();
+            _mainViewModel.IsCutMode = false;
         }
     }
 
     [RelayCommand]
     public void Cut()
     {
+        if (_mainViewModel == null) return;
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
         if (items.Count > 0)
         {
-            ClipboardItem = items.First();
-            IsCutMode = true;
+            _mainViewModel.ClipboardItem = items.First();
+            _mainViewModel.IsCutMode = true;
         }
     }
 
-    [RelayCommand]
     public async Task Paste()
     {
-        if (ClipboardItem == null)
+        if (_mainViewModel?.ClipboardItem == null)
             return;
 
-        var targetPath = Path.Combine(CurrentPath, ClipboardItem.Name);
+        var targetPath = Path.Combine(CurrentPath, _mainViewModel.ClipboardItem.Name);
 
         try
         {
-            if (ClipboardItem.IsDirectory)
+            if (_mainViewModel.ClipboardItem.IsDirectory)
             {
-                if (IsCutMode)
+                if (_mainViewModel.IsCutMode)
                 {
-                    CopyDirectory(ClipboardItem.FullPath, targetPath);
-                    Directory.Delete(ClipboardItem.FullPath, true);
+                    CopyDirectory(_mainViewModel.ClipboardItem.FullPath, targetPath);
+                    Directory.Delete(_mainViewModel.ClipboardItem.FullPath, true);
                 }
                 else
                 {
-                    CopyDirectory(ClipboardItem.FullPath, targetPath);
+                    CopyDirectory(_mainViewModel.ClipboardItem.FullPath, targetPath);
                 }
             }
             else
             {
-                if (IsCutMode)
+                if (_mainViewModel.IsCutMode)
                 {
-                    File.Move(ClipboardItem.FullPath, targetPath, true);
+                    File.Move(_mainViewModel.ClipboardItem.FullPath, targetPath, true);
                 }
                 else
                 {
-                    File.Copy(ClipboardItem.FullPath, targetPath, true);
+                    File.Copy(_mainViewModel.ClipboardItem.FullPath, targetPath, true);
                 }
             }
             
-            IsCutMode = false;
+            _mainViewModel.IsCutMode = false;
             Refresh();
         }
         catch (Exception ex)

@@ -21,6 +21,8 @@ public partial class MainWindow : Window
         RightPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
         
         // Левые кнопки
+        LeftBackButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoBack(); };
+        LeftForwardButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoForward(); };
         LeftCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Copy(); };
         LeftCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Cut(); };
         LeftPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Paste(); };
@@ -31,6 +33,8 @@ public partial class MainWindow : Window
         LeftRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Refresh(); };
         
         // Правые кнопки
+        RightForwardButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoForward(); };
+        RightBackButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoBack(); };
         RightRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Refresh(); };
         RightGoUpButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoUp(); };
         RightRenameButton.Click += RightRenameButton_Click;
