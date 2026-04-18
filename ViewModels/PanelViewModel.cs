@@ -280,6 +280,12 @@ public partial class PanelViewModel : ObservableObject
     }
 
     [RelayCommand]
+    public async Task PasteAsync()
+    {
+        await Paste();
+    }
+
+    [RelayCommand]
     public void Delete()
     {
         var items = SelectedItems.Count > 0 ? SelectedItems : (SelectedItem != null ? [SelectedItem] : []);
@@ -330,6 +336,13 @@ public partial class PanelViewModel : ObservableObject
             return;
 
         System.Diagnostics.Debug.WriteLine($"Переименовать: {SelectedItem.Name}");
+    }
+
+    [RelayCommand]
+    public void ClearSelection()
+    {
+        SelectedItem = null;
+        SelectedItems = [];
     }
 
     public bool RenameItem(string newName)

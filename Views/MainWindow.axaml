@@ -14,6 +14,16 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
+    <Window.InputBindings>
+        <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding ActivePanel.CopyCommand}"/>
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding ActivePanel.CutCommand}"/>
+        <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding ActivePanel.PasteAsyncCommand}"/>
+        <KeyBinding Key="Delete" Command="{Binding ActivePanel.DeleteCommand}"/>
+        <KeyBinding Key="F5" Command="{Binding ActivePanel.RefreshCommand}"/>
+        <KeyBinding Key="F2" Command="{Binding ActivePanel.RenameCommand}"/>
+        <KeyBinding Key="Escape" Command="{Binding ActivePanel.ClearSelectionCommand}"/>
+    </Window.InputBindings>
+
     <Grid RowDefinitions="Auto,Auto,*,Auto">
         <!-- Панель инструментов -->
         <Grid Grid.Row="0" Margin="5">
