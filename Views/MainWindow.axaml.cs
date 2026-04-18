@@ -48,6 +48,10 @@ public partial class MainWindow : Window
         SearchButton.Click += SearchButton_Click;
         SearchTextBox.KeyDown += SearchTextBox_KeyDown;
         
+        // Подсветка кнопки поиска
+        SearchButton.PointerEntered += (s, e) => SearchButton.Background = Avalonia.Media.Brushes.LightGray;
+        SearchButton.PointerExited += (s, e) => SearchButton.Background = new Avalonia.Media.SolidColorBrush(Avalonia.Media.Color.Parse("#CCCCCC"));
+        
         KeyDown += MainWindow_KeyDown;
     }
 
