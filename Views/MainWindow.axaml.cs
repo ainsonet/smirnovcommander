@@ -20,35 +20,41 @@ public partial class MainWindow : Window
         LeftPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
         RightPanelList.SelectionChanged += (s, e) => { UpdateActivePanel(); UpdateStatusBars(); SyncSelectedItems(); };
         
-        // Левые кнопки
+        // Горячие клавиши на панелях
+        LeftPanelList.KeyDown += ListBox_KeyDown;
+        RightPanelList.KeyDown += ListBox_KeyDown;
+        LeftPanelBorder.KeyDown += Window_KeyDown;
+        RightPanelBorder.KeyDown += Window_KeyDown;
+        
+        // Поиск
+        SearchTextBox.KeyDown += SearchTextBox_KeyDown;
+        SearchButton.Click += SearchButton_Click;
+        
+        // Кнопки левой панели
         LeftBackButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoBack(); };
         LeftForwardButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoForward(); };
         LeftCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Copy(); };
         LeftCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Cut(); };
-        LeftPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Paste(); };
+        LeftPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) Task.Run(async () => await vm.LeftPanel.Paste()); };
         LeftDeleteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Delete(); };
         LeftCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.CreateFolder(); };
         LeftRenameButton.Click += LeftRenameButton_Click;
         LeftGoUpButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.GoUp(); };
         LeftRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.LeftPanel.Refresh(); };
         
-        // Правые кнопки
-        RightForwardButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoForward(); };
+        // Кнопки правой панели
         RightBackButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoBack(); };
+        RightForwardButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoForward(); };
         RightRefreshButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Refresh(); };
         RightGoUpButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.GoUp(); };
-        RightRenameButton.Click += RightRenameButton_Click;
-        RightCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CreateFolder(); };
-        RightDeleteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Delete(); };
-        RightPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Paste(); };
-        RightCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Cut(); };
         RightCopyButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Copy(); };
+        RightCutButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Cut(); };
+        RightPasteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) Task.Run(async () => await vm.RightPanel.Paste()); };
+        RightDeleteButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.Delete(); };
+        RightCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CreateFolder(); };
+        RightRenameButton.Click += RightRenameButton_Click;
         
-        // Поиск
-        SearchButton.Click += SearchButton_Click;
-        SearchTextBox.KeyDown += SearchTextBox_KeyDown;
-        
-        KeyDown += MainWindow_KeyDown;
+        KeyDown += Window_KeyDown;
     }
 
     private void LeftPanelList_DoubleTapped(object? sender, TappedEventArgs e)
@@ -117,7 +123,7 @@ public partial class MainWindow : Window
         await ShowRenameDialog(panel);
     }
 
-    private async void MainWindow_KeyDown(object? sender, KeyEventArgs e)
+    private async void Window_KeyDown(object? sender, KeyEventArgs e)
     {
         if (DataContext is MainWindowViewModel vm)
         {
@@ -163,6 +169,11 @@ public partial class MainWindow : Window
                 e.Handled = true;
             }
         }
+    }
+
+    private void ListBox_KeyDown(object? sender, KeyEventArgs e)
+    {
+        Window_KeyDown(sender, e);
     }
 
     private async Task ShowRenameDialog(PanelViewModel? panel)
