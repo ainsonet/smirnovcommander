@@ -109,8 +109,8 @@
                          PlaceholderText="Поиск файлов..."
                          Padding="5,3"
                          BorderBrush="#CCCCCC" BorderThickness="1"/>
-                <Button Grid.Column="2" x:Name="SearchButton" Margin="10,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="Найти" FontSize="14" Padding="15,3"/>
+                <Button x:Name="SearchButton" Grid.Column="2" Margin="10,0,0,0" VerticalAlignment="Center" ToolTip.Tip="Enter">
+                    <TextBlock Text="Найти"/>
                 </Button>
             </Grid>
         </Border>
