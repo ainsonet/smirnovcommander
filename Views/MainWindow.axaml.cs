@@ -23,8 +23,6 @@ public partial class MainWindow : Window
         // Горячие клавиши на панелях
         LeftPanelList.KeyDown += Window_KeyDown;
         RightPanelList.KeyDown += Window_KeyDown;
-        LeftPanelBorder.KeyDown += Window_KeyDown;
-        RightPanelBorder.KeyDown += Window_KeyDown;
         
         // Поиск
         SearchTextBox.KeyDown += SearchTextBox_KeyDown;
@@ -54,6 +52,7 @@ public partial class MainWindow : Window
         RightCreateFolderButton.Click += (s, e) => { if (DataContext is MainWindowViewModel vm) vm.RightPanel.CreateFolder(); };
         RightRenameButton.Click += RightRenameButton_Click;
         
+        // Перехват горячих клавиш на уровне окна
         KeyDown += Window_KeyDown;
     }
 
@@ -131,7 +130,14 @@ public partial class MainWindow : Window
             if (SearchTextBox.IsFocused)
                 return;
                 
-            var activePanel = vm.ActivePanel ?? vm.LeftPanel;
+            // Определяем активную панель из sender
+            PanelViewModel? activePanel = null;
+            if (sender == LeftPanelList)
+                activePanel = vm.LeftPanel;
+            else if (sender == RightPanelList)
+                activePanel = vm.RightPanel;
+            else
+                activePanel = vm.ActivePanel ?? vm.LeftPanel;
 
             if (e.KeyModifiers == KeyModifiers.Control)
             {
